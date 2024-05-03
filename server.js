@@ -32,6 +32,7 @@ const server = http.createServer(app);
 
 server.listen(port);
 server.on('error', onError);
+server.on('listening', onListening);
 
 console.log('API listening in port: ' + port);
 
@@ -65,4 +66,12 @@ function onError(error) {
             throw error;
             break;
     }
+}
+
+function onListening() {
+    const addr = server.address();
+    const bind = (typeof addr === 'string')
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+        debug('Listening on ' + bind);
 }
